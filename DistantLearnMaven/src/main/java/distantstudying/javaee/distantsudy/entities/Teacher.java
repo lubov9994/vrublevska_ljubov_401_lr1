@@ -151,7 +151,9 @@ public class Teacher implements Serializable {
 
     @Override
     public String toString() {
-        return "distantstudying.javaee.distantsudy.entities.Teacher[ id=" + id + " ]";
+        return "Teacher[ id=" + id + ", first_name=" + this.firstName + ","
+                + " second_name=" + this.secondName + ", last_name=" + this.lastName
+                +", degree=" + this.degree + ", kafedra=" + this.kafedra + " ]\n";
     }
     
 }

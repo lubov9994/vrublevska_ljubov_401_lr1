@@ -39,12 +39,11 @@ public class DyscipleTeacherDAO implements EntityDAO<DyscipleTeacher>{
                         "(id, id_teacher, id_dysciple)" +
                         " values (?, ?, ?)";
 
-        // create the mysql insert preparedstatement
         PreparedStatement preparedStmt = conn.prepareStatement(query);
         preparedStmt.setInt(1, newId );
         preparedStmt.setInt(2, entity.getIdTeacher());
         preparedStmt.setInt(3, entity.getIdDysciple());
-        // execute the preparedstatement
+        
         int rowsInserted = preparedStmt.executeUpdate();
         this.revisQueryResult( rowsInserted );
         
@@ -57,10 +56,8 @@ public class DyscipleTeacherDAO implements EntityDAO<DyscipleTeacher>{
         
         String query = "select id, id_teacher, id_dysciple from `" + this.tableName + "` "+
                        "where `id`=" + id;
-
-        // create the mysql insert preparedstatement
+        
         Statement stmt = conn.createStatement();
-        // execute the preparedstatement
         ResultSet rs = stmt.executeQuery( query );
         DyscipleTeacher ds = new DyscipleTeacher();
         
@@ -111,7 +108,7 @@ public class DyscipleTeacherDAO implements EntityDAO<DyscipleTeacher>{
         
         Connection conn = this.connectorDB.createConnection();        
         
-        String query = "select  `id`, `name`, `direction` from `" + this.tableName + "`";
+        String query = "select  `id`, `id_teacher`, `id_dysciple` from `" + this.tableName + "`";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery( query );
         

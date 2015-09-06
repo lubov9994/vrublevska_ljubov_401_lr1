@@ -20,50 +20,47 @@ import javax.persistence.Persistence;
 
 public class DyscipleTeacherManager implements EntityDAO<DyscipleTeacher> {
     
-    private String tableName;
     private EntityManager entityManager;
     
     public DyscipleTeacherManager() {
-        this.tableName = "dysciple";
-        this.entityManager = this.getEntityManager();
+        entityManager = getEntityManager();
     }
     public EntityManager getEntityManager() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( this.NAME_UNIT );
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( NAME_UNIT );
         entityManager = entityManagerFactory.createEntityManager();
         return entityManager;
     }
         
     @Override
     public void create(DyscipleTeacher entity) throws SQLException {
-        int newId = this.generateId();
+        int newId = generateId();
         entity.setId(newId);
         
         try {
-            this.entityManager.getTransaction().begin();
-            this.entityManager.persist( entity );
-            this.entityManager.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            entityManager.persist( entity );
+            entityManager.getTransaction().commit();
         } catch (RuntimeException e) {
-            this.entityManager.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
             throw new SQLException( e );
         }
-
-//        this.entityManager.close();
+        
     }
 
     @Override
     public DyscipleTeacher getById(int id) throws SQLException {
-        return this.entityManager.find(DyscipleTeacher.class, id);
+        return entityManager.find(DyscipleTeacher.class, id);
     }
 
     @Override
     public void update( DyscipleTeacher entity) throws SQLException {
-        
+
         try {
-            this.entityManager.getTransaction().begin();
-            this.entityManager.merge( entity );
-            this.entityManager.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            entityManager.merge( entity );
+            entityManager.getTransaction().commit();
         } catch (RuntimeException e) {
-            this.entityManager.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
             throw new SQLException( e );
         }
 
@@ -71,13 +68,12 @@ public class DyscipleTeacherManager implements EntityDAO<DyscipleTeacher> {
 
     @Override
     public boolean delete(int id) throws SQLException {
-        
         try {
-            this.entityManager.getTransaction().begin();
-            this.entityManager.remove( this.getById( id ) );
-            this.entityManager.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            entityManager.remove( getById( id ) );
+            entityManager.getTransaction().commit();
         } catch (RuntimeException e) {
-            this.entityManager.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
             throw new SQLException( e );
         }
         
@@ -86,14 +82,14 @@ public class DyscipleTeacherManager implements EntityDAO<DyscipleTeacher> {
 
     @Override
     public List<DyscipleTeacher> getAll() throws SQLException {
-        String query = "select  c.id, c.name, c.direction from " +  DyscipleTeacher.class.getSimpleName() + " c ";
+        String query = "select c from " +  DyscipleTeacher.class.getSimpleName() + " c ";
         
-        return this.entityManager.createQuery( query ).getResultList();
+        return entityManager.createQuery( query ).getResultList();
     }
     
     private int generateId () throws SQLException {
         String query = "select max( c.id ) as id from " + DyscipleTeacher.class.getSimpleName() + " c ";
-        int max = (int) this.entityManager.createQuery(query).getSingleResult();   
+        int max = (int) entityManager.createQuery(query).getSingleResult();   
         
         return max + 1;
     }

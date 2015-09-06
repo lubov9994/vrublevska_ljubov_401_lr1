@@ -123,7 +123,7 @@ public class TeacherDAO implements EntityDAO<Teacher>{
         
         Connection conn = this.connectorDB.createConnection();        
         
-        String query = "select  `id`, `name`, `direction` from `" + this.tableName + "`";
+        String query = "select  `id`, `first_name`, `second_name`, `last_name`, `birthday`, `degree`, `kafedra` from `" + this.tableName + "`";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery( query );
         

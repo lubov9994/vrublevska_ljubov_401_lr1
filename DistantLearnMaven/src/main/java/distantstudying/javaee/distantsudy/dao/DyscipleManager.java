@@ -11,10 +11,7 @@ package distantstudying.javaee.distantsudy.dao;
  */
 
 import distantstudying.javaee.distantsudy.entities.Dysciple;
-//import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,45 +23,45 @@ public class DyscipleManager implements EntityDAO<Dysciple> {
     private EntityManager entityManager;
     
     public DyscipleManager() {
-        this.entityManager = this.getEntityManager();
+        entityManager = getEntityManager();
     }
     public EntityManager getEntityManager() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( this.NAME_UNIT );
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( NAME_UNIT );
         entityManager = entityManagerFactory.createEntityManager();
         return entityManager;
     }
         
     @Override
     public void create(Dysciple entity) throws SQLException {
-        int newId = this.generateId();
+        int newId = generateId();
         entity.setId(newId);
         
         try {
-            this.entityManager.getTransaction().begin();
-            this.entityManager.persist( entity );
-            this.entityManager.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            entityManager.persist( entity );
+            entityManager.getTransaction().commit();
         } catch (RuntimeException e) {
-            this.entityManager.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
             throw new SQLException( e );
         }
 
-//        this.entityManager.close();
+//        entityManager.close();
     }
 
     @Override
     public Dysciple getById(int id) throws SQLException {
-        return this.entityManager.find(Dysciple.class, id);
+        return entityManager.find(Dysciple.class, id);
     }
 
     @Override
     public void update( Dysciple entity) throws SQLException {
         
         try {
-            this.entityManager.getTransaction().begin();
-            this.entityManager.merge( entity );
-            this.entityManager.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            entityManager.merge( entity );
+            entityManager.getTransaction().commit();
         } catch (RuntimeException e) {
-            this.entityManager.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
             throw new SQLException( e );
         }
 
@@ -74,11 +71,11 @@ public class DyscipleManager implements EntityDAO<Dysciple> {
     public boolean delete(int id) throws SQLException {
         
         try {
-            this.entityManager.getTransaction().begin();
-            this.entityManager.remove( this.getById( id ) );
-            this.entityManager.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            entityManager.remove( getById( id ) );
+            entityManager.getTransaction().commit();
         } catch (RuntimeException e) {
-            this.entityManager.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
             throw new SQLException( e );
         }
         
@@ -87,14 +84,14 @@ public class DyscipleManager implements EntityDAO<Dysciple> {
 
     @Override
     public List<Dysciple> getAll() throws SQLException {
-        String query = "select  c.id, c.name, c.direction from " +  Dysciple.class.getSimpleName() + " c ";
+        String query = "select c from " +  Dysciple.class.getSimpleName() + " c ";
         
-        return this.entityManager.createQuery( query ).getResultList();
+        return entityManager.createQuery( query ).getResultList();
     }
     
     private int generateId () throws SQLException {
         String query = "select max( c.id ) as id from " + Dysciple.class.getSimpleName() + " c ";
-        int max = (int) this.entityManager.createQuery(query).getSingleResult();   
+        int max = (int) entityManager.createQuery(query).getSingleResult();   
         
         return max + 1;
     }

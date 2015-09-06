@@ -103,8 +103,8 @@ public class Dysciple implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Dysciple[ id=" + this.id + ", name=" + this.name + ","
-                + "description=" + this.direction + " ]";
+        return "Dysciple[ id=" + this.id + ", name=" + this.name + ","
+                + "description=" + this.direction + " ]\n";
     }
     
 }
