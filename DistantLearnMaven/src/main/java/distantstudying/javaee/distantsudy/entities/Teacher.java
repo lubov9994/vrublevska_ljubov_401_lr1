@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Администратор
  */
 @Entity
-@Table(name = "teacher", catalog = "javaeechgu", schema = "")
+@Table(name = "teacher")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Teacher.findAll", query = "SELECT t FROM Teacher t"),
@@ -37,40 +37,24 @@ public class Teacher implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
     @Column(name = "first_name")
     private String firstName;
-    @Basic(optional = false)
     @Column(name = "second_name")
     private String secondName;
-    @Basic(optional = false)
     @Column(name = "last_name")
     private String lastName;
-    @Basic(optional = false)
     @Column(name = "birthday")
     private String birthday;
-    @Basic(optional = false)
     @Column(name = "degree")
-    private int degree;
-    @Basic(optional = false)
+    private Integer degree;
     @Column(name = "kafedra")
-    private int kafedra;
+    private Integer kafedra;
 
     public Teacher() {
     }
 
     public Teacher(Integer id) {
         this.id = id;
-    }
-
-    public Teacher(Integer id, String firstName, String secondName, String lastName, String birthday, int degree, int kafedra) {
-        this.id = id;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.degree = degree;
-        this.kafedra = kafedra;
     }
 
     public Integer getId() {
@@ -113,19 +97,19 @@ public class Teacher implements Serializable {
         this.birthday = birthday;
     }
 
-    public int getDegree() {
+    public Integer getDegree() {
         return degree;
     }
 
-    public void setDegree(int degree) {
+    public void setDegree(Integer degree) {
         this.degree = degree;
     }
 
-    public int getKafedra() {
+    public Integer getKafedra() {
         return kafedra;
     }
 
-    public void setKafedra(int kafedra) {
+    public void setKafedra(Integer kafedra) {
         this.kafedra = kafedra;
     }
 

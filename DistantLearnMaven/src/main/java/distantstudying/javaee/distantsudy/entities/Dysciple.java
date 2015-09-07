@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Администратор
  */
 @Entity
-@Table(name = "dysciple", catalog = "javaeechgu", schema = "")
+@Table(name = "dysciple")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Dysciple.findAll", query = "SELECT d FROM Dysciple d"),
@@ -49,12 +49,6 @@ public class Dysciple implements Serializable {
     public Dysciple(Integer id, String name) {
         this.id = id;
         this.name = name;
-    }
- 
-    public Dysciple(Integer id, String name, String disc) {
-        this.id = id;
-        this.name = name;
-        this.direction = disc;
     }
 
     public Integer getId() {

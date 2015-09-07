@@ -10,8 +10,10 @@ package distantstudying;
  * @author Администратор
  */
 
+import distantstudying.javaee.distantsudy.dao.DyscipleDAO;
 import distantstudying.javaee.distantsudy.dao.DyscipleManager;
 import distantstudying.javaee.distantsudy.dao.DyscipleTeacherManager;
+import distantstudying.javaee.distantsudy.dao.EntityDAO;
 import distantstudying.javaee.distantsudy.dao.TeacherManager;
 import distantstudying.javaee.distantsudy.entities.Dysciple;
 import distantstudying.javaee.distantsudy.entities.DyscipleTeacher;
@@ -33,13 +35,20 @@ public class DistantStudyingAPI {
     
 //    private ArrayList<String> menuItems;
     private ArrayList<Integer> steps;
-    private final DyscipleManager dyscipleMan;
-    private final TeacherManager teacherMan;
-    private final DyscipleTeacherManager dtMan;
+//    private final DyscipleManager dyscipleMan;
+//    private final TeacherManager teacherMan;
+//    private final DyscipleTeacherManager dtMan;
+    private final EntityDAO<Dysciple> dyscipleMan;
+    private final EntityDAO<Teacher> teacherMan;
+    private final EntityDAO<DyscipleTeacher> dtMan;
     
     public DistantStudyingAPI(){
         this.steps = new ArrayList<>();
-        this.dyscipleMan = new DyscipleManager();
+//        this.dyscipleMan = new DyscipleManager();
+//        this.teacherMan = new TeacherManager();
+//        this.dtMan = new DyscipleTeacherManager();
+        
+        this.dyscipleMan = new DyscipleDAO();
         this.teacherMan = new TeacherManager();
         this.dtMan = new DyscipleTeacherManager();
     }
@@ -109,6 +118,9 @@ public class DistantStudyingAPI {
                     }
                 } else if (choise == 3){ // del
                     int teacherId = chooseTeacher();
+                    while ( teacherId == -1){
+                        teacherId = chooseTeacher();
+                    }
                     // подтвердить
                     this.chooseMenuItem(3); 
                     choise = getFeedBack();
@@ -118,6 +130,7 @@ public class DistantStudyingAPI {
                         
                     } else {
                         this.restartMenu();
+                        
                     }
                 } else {
                     this.restartMenu();
@@ -130,8 +143,15 @@ public class DistantStudyingAPI {
                 
                 if ( choise == 1){ // add
                     Dysciple dysciple = generateDysciple( new Dysciple() );
-                    dyscipleMan.create(dysciple);
                     
+                    // подтвердить
+                    this.chooseMenuItem(3); 
+                    choise = getFeedBack();
+                    
+                    if( choise == 1 ) {
+                        dyscipleMan.create(dysciple);
+                        
+                    }
                 } else if (choise == 2){ // upd
                     int dyscipleId = chooseDysciple();
                     while ( dyscipleId == -1){
@@ -153,6 +173,9 @@ public class DistantStudyingAPI {
                     }
                 } else if (choise == 3){ // del
                     int dyscipleId = chooseDysciple();
+                    while ( dyscipleId == -1){
+                        dyscipleId = chooseDysciple();
+                    }
                     // подтвердить
                     this.chooseMenuItem(3); 
                     choise = getFeedBack();
@@ -198,63 +221,63 @@ public class DistantStudyingAPI {
                 break;
             case 3 :
                 this.steps.add(key);
-                System.out.println("Підтвердити");
-                System.out.println("Скасувати");
+                System.out.println("1 - Підтвердити");
+                System.out.println("2 - Скасувати / any key");
                 break;   
             // Інакше
             case 4 :
                 this.steps.add(key);
-                System.out.println("Змінити таблицю Викладачів");
-                System.out.println("Змінити таблицю Дисциплін");
+                System.out.println("1 - Змінити таблицю Викладачів");
+                System.out.println("2 - Змінити таблицю Дисциплін");
                 break; 
             // операції
             case 5 :
                 this.steps.add(key);
-                System.out.println("Додати запис");
-                System.out.println("Оновити запис");
-                System.out.println("Видалити запис");
+                System.out.println("1 - Додати запис");
+                System.out.println("2 - Оновити запис");
+                System.out.println("3 - Видалити запис");
                 break;    
             // викладачі
             case 6 :
                 this.steps.add(key);
-                System.out.println("Ім'я");
-                System.out.println("Пропустити");
+                System.out.println("1 - Ім'я");
+                System.out.println("2 - Пропустити");
                 break;
             case 7 :
                 this.steps.add(key);
-                System.out.println("По батькові");
-                System.out.println("Пропустити");
+                System.out.println("1 - По батькові");
+                System.out.println("2 - Пропустити");
                 break;
             case 8 :
                 this.steps.add(key);
-                System.out.println("Прізвище");
-                System.out.println("Пропустити");
+                System.out.println("1 - Прізвище");
+                System.out.println("2 - Пропустити");
                 break;
             case 9 :
                 this.steps.add(key);
-                System.out.println("День народження (YYYY-MM-DD)");
-                System.out.println("Пропустити");
+                System.out.println("1 - День народження (YYYY-MM-DD)");
+                System.out.println("2 - Пропустити");
                 break;
             case 10 :
                 this.steps.add(key);
-                System.out.println("Cтупітнь");
-                System.out.println("Пропустити");
+                System.out.println("1 - Cтупітнь");
+                System.out.println("2 - Пропустити");
                 break;
             case 11 :
                 this.steps.add(key);
-                System.out.println("Кафедра");
-                System.out.println("Пропустити");
+                System.out.println("1 - Кафедра");
+                System.out.println("2 - Пропустити");
                 break;
             // Дисциплыни
             case 12 :
                 this.steps.add(key);
-                System.out.println("Назва");
-                System.out.println("Пропустити");
+                System.out.println("1 - Назва");
+                System.out.println("2 - Пропустити");
                 break;
             case 13 :
                 this.steps.add(key);
-                System.out.println("Напрям");
-                System.out.println("Пропустити");
+                System.out.println("1 - Напрям");
+                System.out.println("2 - Пропустити");
                 break;
             case 14 :
                 this.steps.add(key);

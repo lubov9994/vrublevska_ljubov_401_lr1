@@ -34,7 +34,7 @@ public class DistantStudying {
         try {
             dAPI.runMenu();
         } catch (SQLException ex) {
-            System.out.println("ERROR");
+            System.out.println("ERROR" + ex.getMessage());
         }
         
     }
